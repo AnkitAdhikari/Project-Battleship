@@ -4,8 +4,6 @@ export default class Gameboard {
     board = [[], [], [], [], [], [], [], [], [], []];
     missedShots = []
     ships = []
-    constructor(coordX, coordY) {
-    }
 
     placeShip(coordX, coordY) {
         if (coordX >= 0 && coordX <= 9 && coordY >= 0 && coordY <= 9) {

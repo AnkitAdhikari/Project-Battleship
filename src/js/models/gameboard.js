@@ -1,7 +1,18 @@
 import Ship from "./ship";
 
 export default class Gameboard {
-    board = [Array.from({ length: 10 }), Array.from({ length: 10 }), Array.from({ length: 10 }), Array.from({ length: 10 }), Array.from({ length: 10 }), Array.from({ length: 10 }), Array.from({ length: 10 }), Array.from({ length: 10 }), Array.from({ length: 10 }), Array.from({ length: 10 })];
+    board = [
+        Array.from({ length: 10 }),
+        Array.from({ length: 10 }),
+        Array.from({ length: 10 }),
+        Array.from({ length: 10 }),
+        Array.from({ length: 10 }),
+        Array.from({ length: 10 }),
+        Array.from({ length: 10 }),
+        Array.from({ length: 10 }),
+        Array.from({ length: 10 }),
+        Array.from({ length: 10 })
+    ];
     missedShots = []
     ships = []
 

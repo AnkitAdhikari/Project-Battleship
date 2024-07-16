@@ -8,6 +8,7 @@ module.exports = {
         static: './dist',
     },
     entry: {
+        GUI: './src/js/GUI.js',
         index: './src/js/index.js',
     },
     plugins: [

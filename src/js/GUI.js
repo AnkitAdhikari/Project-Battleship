@@ -1,15 +1,17 @@
 import PubSub from 'pubsub-js';
 class GUI {
 
-    gameBoardContainer = document.querySelector('.board-container');
+    playerBoardContainer = document.querySelector('.player');
+    computerBoardContainer = document.querySelector('.computer');
     constructor() {
         PubSub.subscribe('Render GameBoard', (msg, data) => {
-            this.renderBoard(data.board);
+            this.renderBoard(data.board1, this.playerBoardContainer);
+            this.renderBoard(data.board2, this.computerBoardContainer, true);
         })
     }
 
     cacheDom() {
-        this.cells = document.querySelectorAll('.cell')
+        this.cells = this.computerBoardContainer.querySelectorAll('.cell.active');
         this.bindEvent();
     }
 
@@ -23,15 +25,14 @@ class GUI {
         PubSub.publish('attacked', { posX, posY });
     }
 
-    renderBoard({ board, missedShots }) {
-        console.log(board)
-        this.gameBoardContainer.innerHTML = '';
+    renderBoard({ board, missedShots }, boardContainer, hide) {
+        boardContainer.innerHTML = '';
         board.forEach((el, i, _) => {
             el.forEach((el, j, _) => {
                 if (missedShots.some(el => el[0] == j && el[1] == i)) {
-                    this.gameBoardContainer.insertAdjacentHTML('beforeend', `<div class="cell${el !== undefined ? ' ship' : ""} missed" data-coordx="${j}" data-coordy="${i}"></div>`)
+                    boardContainer.insertAdjacentHTML('beforeend', `<div class="cell${el !== undefined ? hide ? ' ship' : '' : ""} missed" data-coordx="${j}" data-coordy="${i}"></div>`)
                 } else {
-                    this.gameBoardContainer.insertAdjacentHTML('beforeend', `<div class="cell${el !== undefined ? el.isSunk() ? " sunk" : ' ship' : ""}" data-coordx="${j}" data-coordy="${i}"></div>`)
+                    boardContainer.insertAdjacentHTML('beforeend', `<div class="cell${el !== undefined ? el.isSunk() ? " sunk" : hide ? ' active' : ' ship' : " active"}" data-coordx="${j}" data-coordy="${i}"></div>`)
                 }
             })
         })

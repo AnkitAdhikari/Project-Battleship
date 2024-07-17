@@ -4,7 +4,7 @@ import Player from "./models/player";
 class Game {
     constructor() {
         this.init();
-        PubSub.publish('Render GameBoard', { board: this.player1.gameBoard })
+        PubSub.publish('Render GameBoard', { board1: this.player1.gameBoard, board2: this.player2.gameBoard })
         PubSub.subscribe('attacked', (msg, data) => {
             console.log(data);
             this.lunchAttack(data.posX, data.posY);
@@ -13,10 +13,10 @@ class Game {
     init() {
         this.player1 = new Player();
         this.player2 = new Player();
-        // active player is 2
-        this.activePlayer = this.player2;
+        this.activePlayer = this.player1;
 
         this.placeShipRandom(this.player1.gameBoard);
+        this.placeShipRandom(this.player2.gameBoard);
     }
 
     placeShipRandom(board) {
@@ -36,17 +36,37 @@ class Game {
     }
 
     lunchAttack(posX, posY) {
-        if (this.activePlayer == this.player1) {
-            this.player2.gameBoard.receiveAttack(posX, posY)
-            this.changeActivePlayer(this.player2)
-        } else {
-            this.player1.gameBoard.receiveAttack(posX, posY);
-            this.changeActivePlayer(this.player1);
-        }
-        PubSub.publish('Render GameBoard', { board: this.player1.gameBoard })
+        this.player2.gameBoard.receiveAttack(posX, posY)
+        this.changeActivePlayer(this.player2)
+        this.computerAttack();
+        PubSub.publish('Render GameBoard', { board1: this.player1.gameBoard, board2: this.player2.gameBoard })
+        this.checkWin();
     }
     changeActivePlayer(newActive) {
         this.activePlayer = newActive;
+    }
+    checkWin() {
+        if (this.player1.gameBoard.allShipsSunk()) {
+            console.log("Computer Won");
+        } else if (this.player2.gameBoard.allShipsSunk()) {
+            console.log("You Won")
+        }
+    }
+    computerAttackPos() {
+        const missed = this.player1.gameBoard.missedShots;
+        while (true) {
+            let coordY = parseInt(Math.floor(Math.random() * 10));
+            let coordX = parseInt(Math.floor(Math.random() * 10));
+            if (missed.every(el => el[0] != coordY || el[1] != coordX)) {
+                return [coordY, coordX];
+            }
+        }
+    }
+    computerAttack() {
+        const [posX, posY] = this.computerAttackPos();
+        console.log(posX, posY);
+        this.player1.gameBoard.receiveAttack(posX, posY);
+        this.changeActivePlayer(this.player1);
     }
 }
 

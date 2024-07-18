@@ -1,7 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
 }
 
 html {
@@ -10,6 +13,18 @@ html {
 
 body {
   line-height: 1;
+  display: grid;
+  height: 100vh;
+  grid-template-rows: 0.5fr 8fr 0.5fr;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  padding: 2rem;
 }
 
 .board-container {
@@ -39,4 +54,22 @@ body {
 
 .sunk {
   background-color: red;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem;
+  padding: 0.5rem;
+}
+
+.github-logo {
+  font-size: 3rem;
+  margin-left: 1rem;
+  transition: transform 1s;
+}
+
+.github-logo:hover {
+  transform: rotate(1turn);
 }

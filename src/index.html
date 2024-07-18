@@ -8,14 +8,26 @@
   <body>
     <div class="header">BattleShip</div>
     <div class="board-container">
-      <div class="player board"></div>
-      <div class="computer board"></div>
+      <div class="container">
+        <div class="player board"></div>
+        <p class="player-name name">Player</p>
+      </div>
+      <div class="container">
+        <div class="computer board"></div>
+        <p class="player-name name">Computer</p>
+      </div>
     </div>
     <div class="footer">
       AnkitAdhikari
       <a href="https://github.com/AnkitAdhikari"
         ><ion-icon name="logo-github" class="github-logo"></ion-icon
       ></a>
+    </div>
+    <div class="winner-container hidden">
+      <ion-icon name="close-outline" class="close-btn"></ion-icon>
+      <h1>Congratulations!</h1>
+      <p>The winner is:</p>
+      <h2 id="winner-name"></h2>
     </div>
     <script
       type="module"

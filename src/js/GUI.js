@@ -8,6 +8,9 @@ class GUI {
             this.renderBoard(data.board1, this.playerBoardContainer);
             this.renderBoard(data.board2, this.computerBoardContainer, true);
         })
+        PubSub.subscribe('GameOver', (msg, data) => {
+            this.displayWinner(data.winner);
+        })
     }
 
     cacheDom() {
@@ -38,6 +41,18 @@ class GUI {
         })
         this.cacheDom();
     }
+    displayWinner(winner) {
+        this.winnerModel = document.querySelector('.winner-container')
+        document.getElementById('winner-name').innerText = winner;
+        this.winnerModel.classList.toggle('hidden');
+        this.bindCloseBtn();
+    }
+    bindCloseBtn() {
+        this.closeBtn = document.querySelector('.close-btn');
+        this.closeBtn.addEventListener('click', () => {
+            this.winnerModel.classList.toggle('hidden');
+        })
+    }
 }
 
-new GUI;
+new GUI();

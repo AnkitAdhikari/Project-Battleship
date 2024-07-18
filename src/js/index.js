@@ -47,18 +47,20 @@ class Game {
     }
     checkWin() {
         if (this.player1.gameBoard.allShipsSunk()) {
-            console.log("Computer Won");
+            PubSub.publish('GameOver', { winner: "Computer" })
         } else if (this.player2.gameBoard.allShipsSunk()) {
-            console.log("You Won")
+            PubSub.publish('GameOver', { winner: "Player" })
         }
     }
     computerAttackPos() {
         const missed = this.player1.gameBoard.missedShots;
+        const board = this.player1.gameBoard.board
         while (true) {
             let coordY = parseInt(Math.floor(Math.random() * 10));
             let coordX = parseInt(Math.floor(Math.random() * 10));
             if (missed.every(el => el[0] != coordY || el[1] != coordX)) {
-                return [coordY, coordX];
+                if (board[coordX][coordY] == undefined || !board[coordX][coordY].isSunk())
+                    return [coordY, coordX];
             }
         }
     }

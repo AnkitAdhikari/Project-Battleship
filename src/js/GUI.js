@@ -1,6 +1,6 @@
 import PubSub from 'pubsub-js';
 class GUI {
-
+    restartBtn = document.querySelector('.restart-btn');
     playerBoardContainer = document.querySelector('.player');
     computerBoardContainer = document.querySelector('.computer');
     constructor() {
@@ -20,6 +20,7 @@ class GUI {
 
     bindEvent() {
         this.cells.forEach(el => el.addEventListener('click', this.attack.bind(this)));
+        this.restartBtn.addEventListener('click', this.restart);
     }
 
     attack(e) {
@@ -52,6 +53,9 @@ class GUI {
         this.closeBtn.addEventListener('click', () => {
             this.winnerModel.classList.toggle('hidden');
         })
+    }
+    restart() {
+        location.reload();
     }
 }
 

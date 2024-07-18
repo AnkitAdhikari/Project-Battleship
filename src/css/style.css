@@ -30,6 +30,7 @@ body {
 
 .board-container {
   display: grid;
+  position: relative;
   grid-template-columns: 1fr 1fr;
 }
 
@@ -127,4 +128,24 @@ h2 {
 
 .hidden {
   display: none;
+}
+
+.restart-btn {
+  position: absolute;
+  bottom: 25%;
+  left: 50%;
+  transform: translate(-50%, 25%);
+  padding: 0.7rem 1rem;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 3px;
+}
+
+.restart-btn:hover {
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.restart-btn:active {
+  transform: translate(-50%, 35%);
 }
